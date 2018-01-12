@@ -48,7 +48,7 @@ public class PersonDBImple {
 	}
 
 	public List<Person> findAllPersons() {
-		TypedQuery<Person> query = em.createQuery("SELECT m FROM Movie m ORDER BY m.title DESC", Person.class);
+		TypedQuery<Person> query = em.createQuery("SELECT p FROM PERSON p ORDER BY p.id", Person.class);
 
 		return query.getResultList();
 	}
