@@ -10,9 +10,9 @@ public class Room {
 	private int roomId;
 	
 	
-	//@ManyToOne
-	//@JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_room_apartment"))
-	//private Apartment apartment;
+	@ManyToOne
+	@JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_room_apartment"))
+	private Apartment apartment;
 
 	public Room(int roomId) {
 		super();
