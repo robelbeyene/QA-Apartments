@@ -53,8 +53,8 @@ public class PersonDBImple {
 		return query.getResultList();
 	}
 
-	public Person findPerson(Long id) {
-		return em.find(Person.class, id);
+	public Person findPerson(long i) {
+		return em.find(Person.class, i);
 	}
 
 }
