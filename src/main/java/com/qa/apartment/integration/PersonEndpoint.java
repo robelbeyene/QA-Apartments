@@ -24,7 +24,6 @@ public class PersonEndpoint {
 	@Path("/json")
 	public String getAllPersons() {
 		List<Person> personList = service.findAllPersons();
-		
 		return util.getJSONForObject(personList);
 	}
 
@@ -32,7 +31,6 @@ public class PersonEndpoint {
 	@Path("/json/{id}")
 	public String getPerson(@PathParam("id") Long id) {
 		Person toReturn = service.findPerson(id);
-
 		return util.getJSONForObject(toReturn);
 	}
 
