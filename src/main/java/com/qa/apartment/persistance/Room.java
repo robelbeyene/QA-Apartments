@@ -14,6 +14,10 @@ public class Room {
 	@JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_room_apartment"))
 	private Apartment apartment;
 
+	public Room() {
+		
+	}
+	
 	public Room(int roomId) {
 		super();
 		this.roomId = roomId;

@@ -19,6 +19,10 @@ import javax.persistence.ForeignKey;
 @Entity
 public class Schedule {
 
+	public Schedule() {
+		
+	}
+	
 	public Schedule(int id, Date from_date, Date to_date, Person personID) {
 		super();
 		this.id = id;
