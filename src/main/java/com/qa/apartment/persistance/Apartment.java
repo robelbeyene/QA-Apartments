@@ -1,9 +1,6 @@
 package com.qa.apartment.persistance;
 
-import java.util.Date;
-
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -25,23 +22,19 @@ public class Apartment {
 	@Column
 	@NotNull
 	private String tenant;
-	@Temporal(TemporalType.DATE)
 	@Column
 	@NotNull
-	private Date leaseStart;
-	@Temporal(TemporalType.DATE)
-	@Future
+	private String leaseStart;
 	@Column
 	@NotNull
-	private Date leaseEnd;
+	private String leaseEnd;
+	@Column
+	@NotNull
+	private String breakClause;
 	@Column
 	@NotNull
 	private String agencyPhoneNo;
-	@Temporal(TemporalType.DATE)
 	@Column
-	private Date breakClause;
-	@Column
-	@NotNull
 	private int noRooms;
 	@Column
 	@NotNull
@@ -56,7 +49,7 @@ public class Apartment {
 	private double deposit;
 	
 	public Apartment(String buildingName, String apartmentNo, String agency, String landlord, String tenant,
-			Date leaseStart, Date leaseEnd, String agencyPhoneNo, Date breakClause, int noRooms, double rent,
+			String leaseStart, String leaseEnd, String breakClause, String agencyPhoneNo, int noRooms, double rent,
 			String notes, String address, double deposit) {
 		super();
 		this.buildingName = buildingName;
@@ -66,8 +59,8 @@ public class Apartment {
 		this.tenant = tenant;
 		this.leaseStart = leaseStart;
 		this.leaseEnd = leaseEnd;
-		this.agencyPhoneNo = agencyPhoneNo;
 		this.breakClause = breakClause;
+		this.agencyPhoneNo = agencyPhoneNo;
 		this.noRooms = noRooms;
 		this.rent = rent;
 		this.notes = notes;
@@ -105,29 +98,29 @@ public class Apartment {
 	public void setTenant(String tenant) {
 		this.tenant = tenant;
 	}
-	public Date getLeaseStart() {
+	public String getLeaseStart() {
 		return leaseStart;
 	}
-	public void setLeaseStart(Date leaseStart) {
+	public void setLeaseStart(String leaseStart) {
 		this.leaseStart = leaseStart;
 	}
-	public Date getLeaseEnd() {
-		return leaseEnd;
+	public String getLeaseEnd() {
+		return this.leaseEnd;
 	}
-	public void setLeaseEnd(Date leaseEnd) {
+	public void setLeaseEnd(String leaseEnd) {
 		this.leaseEnd = leaseEnd;
+	}
+	public String getBreakClause() {
+		return breakClause;
+	}
+	public void setBreakClause(String breakClause) {
+		this.breakClause = breakClause;
 	}
 	public String getAgencyPhoneNo() {
 		return agencyPhoneNo;
 	}
 	public void setAgencyPhoneNo(String agencyPhoneNo) {
 		this.agencyPhoneNo = agencyPhoneNo;
-	}
-	public Date getBreakClause() {
-		return breakClause;
-	}
-	public void setBreakClause(Date breakClause) {
-		this.breakClause = breakClause;
 	}
 	public int getNoRooms() {
 		return noRooms;
@@ -158,10 +151,6 @@ public class Apartment {
 	}
 	public void setDeposit(double deposit) {
 		this.deposit = deposit;
-	}
-	
-	
-
-	
+	}		
 
 }

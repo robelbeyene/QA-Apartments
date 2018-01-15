@@ -18,8 +18,7 @@ public class PersonDBImpleTest {
 	private Person person2;
 
 	@Before
-	public void setUp() {
-	
+	public void setUp() {	
 		person1Str = "{ \"id\":1, \"first_name\":\"Hary\", \"last_name\":\"Poter\", \"email\":\"hary.poter@qa.com\", \"phone_number\":\"01234568891\"";
 		person2Str = "{ \"id\":1, \"first_name\":\"Harry\", \"last_name\":\"Potter\", \"email\":\"harry.potter@qa.com\", \"phone_number\":\"01234567891\"";
 		em = new PersonDBImple();
