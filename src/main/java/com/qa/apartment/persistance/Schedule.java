@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.persistence.ForeignKey;
-// Room roomID
+
 
 @Entity
 public class Schedule {
@@ -25,7 +25,6 @@ public class Schedule {
 		this.from_date = from_date;
 		this.to_date = to_date;
 		this.personID = personID;
-		//this.roomID = roomID;
 	}
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
@@ -48,7 +47,7 @@ public class Schedule {
 	
 	@ManyToOne
 	@JoinColumn(nullable=false, foreignKey = @ForeignKey(name = "room_roomIDs"))
-	//private Room roomID;
+	private Room roomID;
 	
 	
 	public Date getFrom_date() {
@@ -63,8 +62,4 @@ public class Schedule {
 	public void setTo_date(Date to_date) {
 		this.to_date = to_date;
 	}
-	
-	
-	
-	
 }
