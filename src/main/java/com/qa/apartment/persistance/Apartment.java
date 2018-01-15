@@ -48,6 +48,10 @@ public class Apartment {
 	@NotNull
 	private double deposit;
 	
+	public Apartment() {
+		
+	}
+	
 	public Apartment(String buildingName, String apartmentNo, String agency, String landlord, String tenant,
 			String leaseStart, String leaseEnd, String breakClause, String agencyPhoneNo, int noRooms, double rent,
 			String notes, String address, double deposit) {

@@ -7,23 +7,27 @@ import javax.persistence.*;
 public class Room {
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private int roomId;
+	private long roomId;
 	
 	
 	@ManyToOne
 	@JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_room_apartment"))
 	private Apartment apartment;
 
+	public Room() {
+		
+	}
+	
 	public Room(int roomId) {
 		super();
 		this.roomId = roomId;
 	}
 	
-	public int getRoomId() {
+	public long getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(int roomId) {
+	public void setRoomId(long roomId) {
 		this.roomId = roomId;
 	}	
 }
