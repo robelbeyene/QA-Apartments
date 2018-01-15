@@ -16,7 +16,7 @@ public class PersonDBImpleTest {
 	private PersonDBImple em;
 	private Person person1;
 	private Person person2;
-
+  
 	@Before
 	public void setUp() {	
 		person1Str = "{ \"id\":1, \"first_name\":\"Hary\", \"last_name\":\"Poter\", \"email\":\"hary.poter@qa.com\", \"phone_number\":\"01234568891\"";
@@ -26,6 +26,19 @@ public class PersonDBImpleTest {
 		person1 = new Person(1, "Hary", "Poter", "hary.potte@qa.com", "01234567881");
 		person2 = new Person(1, "Harry", "Potter", "harry.potter@qa.com", "01234567891");
 	}
+
+	
+	@Test
+	public void createPersonFromStringTest() {
+		Person person1 = new Person(1, "Harry", "Potter", "harry.potter@qa.com", "01234567891");
+		PersonDBImple em = new PersonDBImple();
+		
+		assertEquals("Result not expected", em.findAllPersons().size(), 0);
+		
+		em.createPersonFromPerson(person1);
+		
+		assertEquals("Result not expected", em.findAllPersons().size(), 1);
+    }
 
 	@Test
 	public void createPersonFromStringTest() {
