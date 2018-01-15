@@ -39,8 +39,8 @@ public class ApartmentServiceDbImpl {
 	}
 	
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updateApartment(Apartment originalApartment,Apartment newApartment) {
-		newApartment = em.merge(originalApartment);
+	public String updateApartment(long id, Apartment newApartment) {
+		newApartment = em.merge(findApartment(id));
 		return "movie sucessfully updated";
 	}
 	
