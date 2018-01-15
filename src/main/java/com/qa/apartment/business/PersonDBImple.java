@@ -21,7 +21,7 @@ public class PersonDBImple {
 		em.persist(aPerson);
 		return "{\"message\": \"person sucessfully added\"}";
 	}
-	
+
 	@Transactional(Transactional.TxType.REQUIRED)
 	public String createPersonFromPerson(Person person) {
 		em.persist(person);
@@ -29,10 +29,15 @@ public class PersonDBImple {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updatePersonFromString(String newDetails) {
+	public String updatePersonFromString(Long id, String newDetails) {
 		Person aPerson = util.getObjectForJSON(newDetails, Person.class);
-		em.merge(aPerson);
-		return "{\"message\": \"person sucessfully updated\"}";
+		Person currentPerson = findPerson(id);
+		if (currentPerson != null) {
+			currentPerson = aPerson;
+			em.merge(aPerson);
+			return "{\"message\": \"person sucessfully updated\"}";
+		}
+		return "{\"message\": \"person not updated\"}";
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
@@ -53,7 +58,7 @@ public class PersonDBImple {
 		return query.getResultList();
 	}
 
-	public Person findPerson(Long id) {
+	public Person findPerson(long id) {
 		return em.find(Person.class, id);
 	}
 
