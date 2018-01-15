@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Room {
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private int roomId;
+	private long roomId;
 	
 	
 	@ManyToOne
@@ -19,11 +19,11 @@ public class Room {
 		this.roomId = roomId;
 	}
 	
-	public int getRoomId() {
+	public long getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(int roomId) {
+	public void setRoomId(long roomId) {
 		this.roomId = roomId;
 	}	
 }
