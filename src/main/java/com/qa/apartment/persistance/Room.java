@@ -25,9 +25,5 @@ public class Room {
 
 	public void setRoomId(int roomId) {
 		this.roomId = roomId;
-	}
-
-	
-	
-	
+	}	
 }
