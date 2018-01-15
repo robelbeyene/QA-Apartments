@@ -26,6 +26,10 @@ public class Person {
 	@Column(name="phone_number")
 	private String phoneNumber;
 	
+	public Person() {
+		
+	}
+	
 	public Person(long personID, String firstName, String lastName, String email, String phoneNumber) {
 		super();
 		this.personID = personID;
