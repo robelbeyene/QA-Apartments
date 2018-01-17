@@ -27,7 +27,7 @@ public class RoomEndpoint {
 	
 	@Path("/getRoom")
 	@GET
-	public String getAllMovies() {
+	public String getAllRooms() {
 		List<Room> rooms = roomService.findAllRooms();
 		return jsonUtil.getJSONForObject(rooms);
 	}
