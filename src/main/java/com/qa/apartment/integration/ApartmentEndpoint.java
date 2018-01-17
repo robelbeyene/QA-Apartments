@@ -27,15 +27,13 @@ public class ApartmentEndpoint {
 	@Path("/json")
 	@GET
 	public String getAllApartments() {
-		List<Apartment> apartments = service.findAllApartments();
-		return jsonUtil.getJSONForObject(apartments);
+		return jsonUtil.getJSONForObject(service.findAllApartments());
 	}
 	
 	@Path("/json")
 	@POST
 	public String createApartment(String newAp) {
-		Apartment newApartment = jsonUtil.getObjectForJSON(newAp, Apartment.class);
-		return service.createApartment(newApartment);
+		return service.createApartment(newAp);
 	}
 	
 	@Path("/json/{id}")
@@ -47,8 +45,7 @@ public class ApartmentEndpoint {
 	@Path("/json/{id}")
 	@PUT
 	public String updateApartment(String newAp,@PathParam("id") long id) {
-		Apartment newApartment = jsonUtil.getObjectForJSON(newAp, Apartment.class);
-		return service.updateApartment(id, newApartment);
+		return service.updateApartment(id, newAp);
 	}
 	
 }
