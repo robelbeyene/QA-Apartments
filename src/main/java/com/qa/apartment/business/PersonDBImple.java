@@ -1,6 +1,8 @@
 package com.qa.apartment.business;
 
 import java.util.List;
+
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -13,7 +15,9 @@ public class PersonDBImple {
 
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
-	private JSONUtil util = new JSONUtil();
+	
+	@Inject
+	private JSONUtil util;
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	public String createPersonFromString(String person) {
@@ -60,6 +64,14 @@ public class PersonDBImple {
 
 	public Person findPerson(long id) {
 		return em.find(Person.class, id);
+	}
+	
+	public JSONUtil getUtil() {
+		return util;
+	}
+
+	public void setUtil(JSONUtil util) {
+		this.util = util;
 	}
 
 }
