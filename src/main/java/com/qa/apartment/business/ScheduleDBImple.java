@@ -38,12 +38,12 @@ public class ScheduleDBImple {
 		return "{\"message\": \"schedule sucessfully updated\"}";
 	}
 	
-	public Schedule findMovie(Long id)
+	public Schedule findSchedule(Long id)
 	{
 		return em.find(Schedule.class, id);
 	}
 	
-	public List<Schedule> findAllMovies()
+	public List<Schedule> findAllSchedules()
 	{
 		TypedQuery<Schedule> query = em.createQuery("SELECT m FROM Schedule m", Schedule.class);
         return query.getResultList();
