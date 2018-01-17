@@ -1,7 +1,6 @@
 package com.qa.apartment.business;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,7 +17,7 @@ public class PersonMapImpl implements PersonService{
 
 	private static final Logger LOGGER = Logger.getLogger(PersonMapImpl.class);
 	private Map<Long, Person> personMap;
-	private static Long count = 0L;
+	private Long count = 0L;
 	
 	@Inject
 	private JSONUtil util;
@@ -29,8 +28,8 @@ public class PersonMapImpl implements PersonService{
 	}
 	
 	private void initPerson() {
-		Person aPerson = new Person(1L,"fName","lName", "email","phoneNumber");
-		personMap.put(1L, aPerson);
+		Person aPerson = new Person(count,"fName","lName", "email","phoneNumber");
+		personMap.put(count++, aPerson);
 	}
 	
 	public String createPersonFromString(String person) {
@@ -81,7 +80,7 @@ public class PersonMapImpl implements PersonService{
 
 	
 	public String findAllPersons() {
-		return util.getJSONForObject(personMap);
+		return util.getJSONForObject(personMap.values());
 	}
 	
 	public Person findPerson(Long id) {
@@ -94,5 +93,9 @@ public class PersonMapImpl implements PersonService{
 
 	public void setUtil(JSONUtil util) {
 		this.util = util;
+	}
+	
+	public Map<Long, Person> getMap() {
+		return personMap; //used to prove a bug in PersonDBImpleTest
 	}
 }

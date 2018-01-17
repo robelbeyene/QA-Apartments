@@ -1,8 +1,7 @@
 package com.qa.apartment.business;
 
-import java.util.List;
-
 import com.qa.apartment.persistance.Person;
+import com.qa.apartment.util.JSONUtil;
 
 public interface PersonService {
 
@@ -19,5 +18,9 @@ public interface PersonService {
 	public String findAllPersons();
 	
 	public Person findPerson(Long id);
+	
+	public JSONUtil getUtil();
+	
+	public void setUtil(JSONUtil util);
 	
 }
