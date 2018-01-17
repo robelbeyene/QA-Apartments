@@ -30,6 +30,13 @@ public class Schedule {
 		this.to_date = to_date;
 		this.personID = personID;
 	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
