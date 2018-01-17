@@ -6,17 +6,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.List;
+
 import com.qa.apartment.persistance.Room;
 import com.qa.apartment.util.JSONUtil;
 
 @Default
 @Transactional(Transactional.TxType.SUPPORTS)
-public class RoomDBImple implements RoomService{
+public class RoomDBImple implements RoomService {
 
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
-	
+
 	@Inject
 	private JSONUtil util;
 
@@ -24,49 +24,68 @@ public class RoomDBImple implements RoomService{
 	@Transactional(Transactional.TxType.REQUIRED)
 	public String createRoomFromString(String roomJson) {
 		Room aRoom = util.getObjectForJSON(roomJson, Room.class);
-		createRoomFromRoom(aRoom);
-		return "{\"message\": \"room sucessfully added\"}";
-	}
-	
-	@Override
-	@Transactional(Transactional.TxType.REQUIRED)
-	public String createRoomFromRoom(Room room) {
-		em.persist(room);
-		return "{\"message\": \"room sucessfully added\"}";
+		if (aRoom != null) {
+			createRoomFromRoom(aRoom);
+			return "{\"message\": \"room sucessfully added\"}";
+		}
+		return "{\"message\": \"ALERT: room unsucessfully created. " + "Room to create is null.\"}";
+
 	}
 
 	@Override
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updateRoomFromString(String newDetailsJson) {
-		Room aRoom = util.getObjectForJSON(newDetailsJson, Room.class);
-		return updateRoomFromRoom(aRoom);
+	public String createRoomFromRoom(Room room) {
+		if (room != null) {
+			em.persist(room);
+			return "{\"message\": \"room sucessfully added\"}";
+		}
+		return "{\"message\": \"ALERT: room unsucessfully created. " + "Room to create is null.\"}";
+
 	}
-	
+
 	@Override
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updateRoomFromRoom(Room room) {
-		em.merge(room);
-		return "{\"message\": \"room sucessfully updated\"}";
+	public String updateRoomFromString(Long id, String newDetailsJson) {
+		Room aRoom = util.getObjectForJSON(newDetailsJson, Room.class);
+		if (aRoom != null) {
+			return updateRoomFromRoom(id, aRoom);
+		}
+		return "{\"message\": \"ALERT: room unsucessfully updated. " + "Room passed in is null.\"}";
+
 	}
-	
+
+	@Override
+	@Transactional(Transactional.TxType.REQUIRED)
+	public String updateRoomFromRoom(Long id, Room room) {
+		if (room != null) {
+			em.merge(room);
+			return "{\"message\": \"room sucessfully updated\"}";
+		}
+		return "{\"message\": \"ALERT: room unsucessfully updated. " + "Room passed in is null.\"}";
+	}
+
 	@Override
 	@Transactional(Transactional.TxType.REQUIRED)
 	public String deleteRoom(long id) {
-		em.remove(findRoom(id));
-		return "{\"message\": \"room sucessfully removed\"}";
+		if (findRoom(id) != null) {
+			em.remove(findRoom(id));
+			return "{\"message\": \"room sucessfully deleted\"}";
+		}
+		return "{\"message\": \"ALERT: room unsucessfully deleted. " + "Room to delete is null.\"}";
+
 	}
-	
+
 	@Override
-	public List<Room> findAllRooms() {
+	public String findAllRooms() {
 		TypedQuery<Room> query = em.createQuery("SELECT r FROM ROOM r ORDER BY r.id", Room.class);
-		return query.getResultList();
+		return util.getJSONForObject(query.getResultList());
 	}
-	
+
 	@Override
 	public Room findRoom(long id) {
 		return em.find(Room.class, id);
 	}
-	
+
 	public EntityManager getEm() {
 		return em;
 	}
@@ -74,7 +93,7 @@ public class RoomDBImple implements RoomService{
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-	
+
 	public JSONUtil getUtil() {
 		return util;
 	}
@@ -82,6 +101,5 @@ public class RoomDBImple implements RoomService{
 	public void setUtil(JSONUtil util) {
 		this.util = util;
 	}
-
 
 }

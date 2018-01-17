@@ -1,23 +1,24 @@
 package com.qa.apartment.business;
 
-import java.util.List;
-
 import com.qa.apartment.persistance.Room;
+import com.qa.apartment.util.JSONUtil;
 
 public interface RoomService {
-	
+
 	String createRoomFromString(String roomJson);
-	
+
 	String createRoomFromRoom(Room room);
-	
-	String updateRoomFromString(String newDetailsJson);
-	
-	String updateRoomFromRoom(Room room);
-	
+
+	String updateRoomFromString(Long id, String newDetailsJson);
+
+	String updateRoomFromRoom(Long id, Room room);
+
 	String deleteRoom(long id);
-	
-	List<Room> findAllRooms();
-	
+
+	String findAllRooms();
+
 	Room findRoom(long id);
+
+	void setUtil(JSONUtil util);
 
 }
