@@ -13,7 +13,7 @@ import com.qa.apartment.persistance.Person;
 import com.qa.apartment.util.JSONUtil;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PersonDBImpleTest {
+public class PersonServiceTest {
 
 	private String testJsonStringA;
 	private String testJsonStringB;
@@ -21,7 +21,7 @@ public class PersonDBImpleTest {
 	private Person bPerson;
 
 	@InjectMocks
-	PersonService impl;
+	private PersonMapImpl impl;
 
 	@Mock
 	private JSONUtil util;
@@ -96,16 +96,18 @@ public class PersonDBImpleTest {
 		Assert.assertNull(impl.findPerson(1L));
 	}
 
-//	@Test
-//	public void testFindAllPersons() {
-//		Mockito.when(util.getObjectForJSON(testJsonStringA, Person.class)).thenReturn(aPerson);
-//		Mockito.when(util.getObjectForJSON(testJsonStringB, Person.class)).thenReturn(bPerson);
-//		
-//		impl.createPersonFromString(testJsonStringA);
-//		System.out.println(impl.findAllPersons());
-//		System.out.println(util.getJSONForObject(impl.getMap()));
-//
-//	} THERE IS A BUG WITH getJSONForObject which returns null
+	// @Test
+	// public void testFindAllPersons() {
+	// Mockito.when(util.getObjectForJSON(testJsonStringA,
+	// Person.class)).thenReturn(aPerson);
+	// Mockito.when(util.getObjectForJSON(testJsonStringB,
+	// Person.class)).thenReturn(bPerson);
+	//
+	// impl.createPersonFromString(testJsonStringA);
+	// System.out.println(impl.findAllPersons());
+	// System.out.println(util.getJSONForObject(impl.getMap()));
+	//
+	// } THERE IS A BUG WITH getJSONForObject which returns null
 
 	@Test
 	public void testFindPerson() {
