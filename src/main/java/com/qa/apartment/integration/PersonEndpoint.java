@@ -23,8 +23,8 @@ public class PersonEndpoint {
 	@GET
 	@Path("/json")
 	public String getAllPersons() {
-		List<Person> personList = service.findAllPersons();
-		return util.getJSONForObject(personList);
+		String personList = service.findAllPersons();
+		return personList;
 	}
 
 	@GET

@@ -11,7 +11,7 @@ import com.qa.apartment.persistance.Person;
 import com.qa.apartment.util.JSONUtil;
 
 @Transactional(Transactional.TxType.SUPPORTS)
-public class PersonDBImple {
+public class PersonDBImple implements PersonService{
 
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
@@ -45,24 +45,23 @@ public class PersonDBImple {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updatePersonFromPerson(Person newDetails) {
+	public String updatePersonFromPerson(Long id,Person newDetails) {
 		em.merge(newDetails);
 		return "{\"message\": \"person sucessfully updated\"}";
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String deletePerson(long id) {
+	public String deletePerson(Long id) {
 		em.remove(findPerson(id));
 		return "{\"message\": \"person sucessfully removed\"}";
 	}
 
-	public List<Person> findAllPersons() {
+	public String findAllPersons() {
 		TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p ORDER BY p.id", Person.class);
-
-		return query.getResultList();
+		return util.getJSONForObject(query.getResultList());
 	}
 
-	public Person findPerson(long id) {
+	public Person findPerson(Long id) {
 		return em.find(Person.class, id);
 	}
 	
