@@ -17,8 +17,11 @@ import com.qa.apartment.util.JSONUtil;
 @Alternative
 public class ScheduleImple implements ScheduleService  {
 	
-private Map<Long, Schedule> scheduleList;
-	
+	private Map<Long, Schedule> scheduleList;
+		
+	private Long ID;
+	private static Long INITIAL_COUNT = 0L;
+
 	@Inject
 	private JSONUtil util;
 	
@@ -32,19 +35,26 @@ private Map<Long, Schedule> scheduleList;
 	public String createScheduleFromString(String schedule)
 	{
 		Schedule aSchedule = util.getObjectForJSON(schedule, Schedule.class);
-		scheduleList.put((long) aSchedule.getId(), aSchedule);
+		scheduleList.put(INITIAL_COUNT++, aSchedule);
+		
 		return "{\"message\": \"schedule map sucessfully added\"}";
 	}
 	
 	@Transactional(REQUIRED)
 	public String updateSchedule(String schedule) {
 		Schedule updatedSchedule = util.getObjectForJSON(schedule, Schedule.class);
-		scheduleList.replace((long) updatedSchedule.getId(), updatedSchedule);
-		return "{\"message\": \"schedule sucessfully updated\"}";
+		long id = updatedSchedule.getId();
+		Schedule scheduleOld = scheduleList.get(id);
+		if(scheduleOld != null) {
+			scheduleOld = updatedSchedule;
+			scheduleList.put((long) updatedSchedule.getId(), scheduleOld);
+			return "{\"message\": \"schedule sucessfully updated\"}";
+		}
+		return "{\"message\": \"schedule not updated see log\"}";
 	}
 	
 	@Transactional(REQUIRED)
-	public String deleteSchedule(long id) {
+	public String deleteSchedule(Long id) {
 		scheduleList.remove(id);
 		return "{\"message\": \"schedule sucessfully deleted\"}";
 	}
@@ -54,9 +64,11 @@ private Map<Long, Schedule> scheduleList;
 	      return util.getJSONForObject(scheduleList);
 	}
 
-
-	@Override
-	public String findSchedule(long id) {
+	public String findSchedule(Long id) {
 			return util.getJSONForObject(scheduleList.get(id));
+	}
+
+	public void setUtil(JSONUtil util) {
+		this.util = util;
 	}
 }

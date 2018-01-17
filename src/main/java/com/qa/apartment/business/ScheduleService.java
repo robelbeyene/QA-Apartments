@@ -2,13 +2,13 @@ package com.qa.apartment.business;
 
 public interface ScheduleService {
 		
-		String findSchedule(long id);
+		String findSchedule(Long id);
 
 		String findAllSchedules();
 
 		String createScheduleFromString(String schedule);
 
-		String deleteSchedule(long id);
+		String deleteSchedule(Long id);
 
 		String updateSchedule(String schedule);
 }

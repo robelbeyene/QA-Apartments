@@ -45,7 +45,7 @@ public class ScheduleEndPoint {
 	@DELETE
 	@Path("/json/{id}")
 	@Produces({ "application/json" })
-	public String deleteSchedule(@PathParam("id") Integer id) {
+	public String deleteSchedule(@PathParam("id") Long id) {
 		return impl.deleteSchedule(id);
 	}
 	
