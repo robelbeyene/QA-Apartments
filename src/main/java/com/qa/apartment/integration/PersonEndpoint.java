@@ -23,8 +23,8 @@ public class PersonEndpoint {
 	@GET
 	@Path("/json")
 	public String getAllPersons() {
-		List<Person> personList = service.findAllPersons();
-		return util.getJSONForObject(personList);
+		String personList = service.findAllPersons();
+		return personList;
 	}
 
 	@GET
@@ -51,4 +51,5 @@ public class PersonEndpoint {
 	public String deletePerson(@PathParam("id") Long id) {
 		return service.deletePerson(id);
 	}
+
 }

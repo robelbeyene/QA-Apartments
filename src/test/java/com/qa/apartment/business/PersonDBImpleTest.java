@@ -1,92 +1,73 @@
 package com.qa.apartment.business;
 
-import static org.junit.Assert.*;
-
-import java.util.List;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.qa.apartment.persistance.Person;
+import com.qa.apartment.util.JSONUtil;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PersonDBImpleTest {
-/*
-	private String person1Str;
-	private String person2Str;
-	private PersonDBImple em;
-	private Person person1;
-	private Person person2;
-	private Person person3;
+
+	private String testJsonStringA;
+	private String testJsonStringB;
+	private Person aPerson;
+	private Person bPerson;
+	
+	@InjectMocks
+	PersonMapImpl impl;
+
+	@Mock
+	private JSONUtil util;
 
 	@Before
 	public void setUp() {
-
-		person1Str = "{\"id\":1,\"first_name\":\"Hary\",\"last_name\":\"Poter\",\"email\":\"hary.poter@qa.com\",\"phone_number\":\"01234568891\"}";
-		person2Str = "{\"id\":1,\"first_name\":\"Harry\",\"last_name\":\"Potter\",\"email\":\"harry.potter@qa.com\",\"phone_number\":\"01234567891\"}";
-		em = new PersonDBImple();
-
-		person1 = new Person(1, "Hary", "Poter", "hary.potte@qa.com", "01234567881");
-		person2 = new Person(1, "Harry", "Potter", "harry.potter@qa.com", "01234567891");
-		person3 = new Person(2, "Harry", "Potter", "harry.potter@qa.com", "01234567891");
+		impl.setUtil(util);
+		
+		String testJsonStringA = "{\"first_name\": \"James\",\"last_name\": \"Herbert\",\"email\": \"test@test.com\", \"phone_number\": \"01234567891\"}";
+		String testJsonStringB = "{\"first_name\": \"Jenkins\",\"last_name\": \"Harlot\",\"email\": \"test2@test.com\", \"phone_number\": \"01234567891\"}";
+		
+		Person aPerson = new Person("James", "Herbert", "test@test.com", "01234567891");
+		Person bPerson = new Person("Jenkins", "Harlot", "test2@test.com", "01234567891");
 	}
 
 	@Test
-	public void createPersonFromStringTest() {
-		em.createPersonFromString(person1Str);
-		assertTrue("Result not expected at point after adding person1", em.findAllPersons().size() != 0);
+	public void testCreatePersonFromString() {
+		Mockito.when(util.getObjectForJSON(testJsonStringA, Person.class)).thenReturn(aPerson);
+
+		String returnedString = impl.createPersonFromString(testJsonStringA);
+		Assert.assertEquals("{\"message\": \"person sucessfully added\"}", returnedString);
+
+		Mockito.verify(util).getObjectForJSON(testJsonStringA, Person.class);
 	}
 
 	@Test
-	public void createPersonFromPersonTest() {
-		em.createPersonFromPerson(person1);
-		assertTrue("Result not expected at point after adding person1", em.findAllPersons().size() != 0);
+	public void testCreatePersonFromPerson() {
+		String returnedString = impl.createPersonFromPerson(aPerson);
+		Assert.assertEquals("{\"message\": \"person sucessfully added\"}", returnedString);
 	}
-
+	
 	@Test
-	public void updatePersonFromPersonTest() {
-		em.createPersonFromPerson(person1);
-		assertEquals("Result not expected at point before updating person1", em.findPerson(1L), person1);
-		em.updatePersonFromPerson(person2);
-		assertEquals("Result not expected at point after updating person1", em.findPerson(1L), person2);
+	public void updatePersonFromString() {
+		Mockito.when(util.getObjectForJSON(testJsonStringA, Person.class)).thenReturn(aPerson);
+		Mockito.when(util.getObjectForJSON(testJsonStringB, Person.class)).thenReturn(bPerson);
+		
+		String returnedString = impl.createPersonFromString(testJsonStringA);
+		Assert.assertEquals("{\"message\": \"person sucessfully added\"}", returnedString);
+
+		returnedString = impl.updatePersonFromString(1L, testJsonStringB);
+		Assert.assertEquals("{\"message\": \"person sucessfully updated\"}", returnedString);
+
+		returnedString = impl.updatePersonFromString(1L, testJsonStringB);
+		Assert.assertEquals("{\"message\": \"person not updated see log\"}", returnedString);
+
+		
 	}
 
-	@Test
-	public void updatePersonFromStringTest() {
-		em.createPersonFromPerson(person1);
-		assertEquals("Result not expected at point before updating person1", em.findPerson(1L), person1);
-		em.updatePersonFromString(1L, person2Str);
-		assertEquals("Result not expected at point after updating person1", em.findPerson(1L), person2);
-	}
-
-	@Test
-	public void deletePersonTest() {
-		em.createPersonFromPerson(person1);
-		em.createPersonFromPerson(person3);
-
-		assertEquals("Result not expected at point before adding person1", em.findAllPersons().size(), 2);
-		em.deletePerson(2);
-		assertTrue("Result not expected at point before adding person1", em.findAllPersons().size() != 2);
-	}
-
-	@Test
-	public void findAllPersonsTest() {
-		em.createPersonFromPerson(person1);
-		em.createPersonFromPerson(person3);
-
-		List<Person> resultList = em.findAllPersons();
-
-		assertEquals("Result not expected", resultList.get(0).getPersonID(), 1);
-		assertEquals("Result not expected", resultList.get(1).getPersonID(), 2);
-
-	}
-
-	@Test
-	public void findPersonTest() {
-		em.createPersonFromPerson(person1);
-		em.createPersonFromPerson(person3);
-
-		assertEquals("Result not expected", em.findPerson(1L), person1);
-		assertEquals("Result not expected", em.findPerson(2L), person1);
-	}
-*/
 }

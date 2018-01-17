@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Email;
 public class Person {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO) @Column(name = "id")
-	private long personID;
+	private Long personID;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -30,13 +30,16 @@ public class Person {
 		
 	}
 	
-	public Person(long personID, String firstName, String lastName, String email, String phoneNumber) {
-		super();
-		this.personID = personID;
+	public Person(String firstName, String lastName, String email, String phoneNumber) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public Person(Long personID, String firstName, String lastName, String email, String phoneNumber) {
+		this(firstName, lastName, email, phoneNumber);
+		this.personID = personID;
 	}
 
 	public String getFirstName() {
