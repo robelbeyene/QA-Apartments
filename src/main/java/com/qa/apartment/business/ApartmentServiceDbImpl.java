@@ -1,5 +1,5 @@
 package com.qa.apartment.business;
-
+//
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

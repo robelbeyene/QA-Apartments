@@ -1,5 +1,5 @@
 package com.qa.apartment.persistance;
-
+//
 import java.util.Date;
 
 import javax.persistence.*;

@@ -1,5 +1,5 @@
 package com.qa.apartment.business;
-
+//
 import com.qa.apartment.persistance.Apartment;
 
 public interface ApartmentService {
