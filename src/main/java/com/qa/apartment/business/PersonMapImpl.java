@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -11,10 +13,12 @@ import org.apache.log4j.Logger;
 import com.qa.apartment.persistance.Person;
 import com.qa.apartment.util.JSONUtil;
 
+@Alternative @ApplicationScoped
 public class PersonMapImpl implements PersonService{
 
 	private static final Logger LOGGER = Logger.getLogger(PersonMapImpl.class);
 	private Map<Long, Person> personMap;
+	private static Long count = 0L;
 	
 	@Inject
 	private JSONUtil util;
@@ -25,21 +29,21 @@ public class PersonMapImpl implements PersonService{
 	}
 	
 	private void initPerson() {
-		Person aPerson = new Person(1,"fName","lName", "email","phoneNumber");
-		personMap.put((long)1, aPerson);
+		Person aPerson = new Person(1L,"fName","lName", "email","phoneNumber");
+		personMap.put(1L, aPerson);
 	}
 	
 	public String createPersonFromString(String person) {
 		LOGGER.info("In createPersonFromString method about to add to create Person");
 		Person aPerson = util.getObjectForJSON(person, Person.class);
 		LOGGER.info("In createPersonFromString method about to add to map");
-		personMap.put( aPerson.getPersonID(), aPerson);
+		personMap.put(count++, aPerson);
 		return "{\"message\": \"person sucessfully added\"}";
 	}
 
 	
 	public String createPersonFromPerson(Person person) {
-		personMap.put(person.getPersonID(), person);
+		personMap.put(count++, person);
 		return "{\"message\": \"person sucessfully added\"}";
 	}
 
@@ -82,5 +86,13 @@ public class PersonMapImpl implements PersonService{
 	
 	public Person findPerson(Long id) {
 		return personMap.get(id);
+	}
+
+	public JSONUtil getUtil() {
+		return util;
+	}
+
+	public void setUtil(JSONUtil util) {
+		this.util = util;
 	}
 }
