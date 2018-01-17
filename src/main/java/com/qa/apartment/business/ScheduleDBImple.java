@@ -1,6 +1,6 @@
 package com.qa.apartment.business;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,7 +11,7 @@ import com.qa.apartment.persistance.Schedule;
 import com.qa.apartment.util.JSONUtil;
 
 @Transactional(Transactional.TxType.SUPPORTS)
-public class ScheduleDBImple {
+public class ScheduleDBImple implements ScheduleService {
 
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
@@ -31,27 +31,23 @@ public class ScheduleDBImple {
 	}
 	
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updateSchedule(Long id, String schedule)
+	public String updateSchedule(String schedule)
 	{
 		Schedule aSchedule = util.getObjectForJSON(schedule, Schedule.class);
-		Schedule currentPerson = findSchedule(id);
-		if (currentPerson != null) {
-			currentPerson = aSchedule;
-			em.merge(aSchedule);
-			return "{\"message\": \"person sucessfully updated\"}";
-		}		
-		return "{\"message\": \"person not updated\"}";
+		em.merge(aSchedule);
+		return "{\"message\": \"schedule sucessfully updated\"}";
 	}
 	
-	public Schedule findSchedule(Long id)
+	public String findSchedule(long id)
 	{
-		return em.find(Schedule.class, id);
+		return util.getJSONForObject(em.find(Schedule.class, id));
 	}
 	
-	public List<Schedule> findAllSchedules()
+	public String findAllSchedules()
 	{
 		TypedQuery<Schedule> query = em.createQuery("SELECT m FROM Schedule m", Schedule.class);
-        return query.getResultList();
+		Collection<Schedule> schedule = (Collection<Schedule>) query.getResultList();
+        return util.getJSONForObject(schedule);
 	}
 }
 

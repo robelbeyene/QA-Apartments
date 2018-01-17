@@ -1,6 +1,5 @@
 package com.qa.apartment.integration;
 
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -12,7 +11,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import com.qa.apartment.business.ScheduleDBImple;
-import com.qa.apartment.persistance.Schedule;
 import com.qa.apartment.util.JSONUtil;
 
 @Path("/schedule")
@@ -27,16 +25,14 @@ public class ScheduleEndPoint {
 	@Path("/json")
 	@Produces({ "application/json" })
 	public String getAllSchedules() {
-		List<Schedule> aSchedule = impl.findAllSchedules();
-		return util.getJSONForObject(aSchedule);
+		return impl.findAllSchedules();
 	}
 	
 	@GET
 	@Path("/json")
 	@Produces({ "application/json" })
 	public String getSchedule(@PathParam("id") Long id) {
-		Schedule aSchedule = impl.findSchedule(id);
-		return util.getJSONForObject(aSchedule);
+		return impl.findSchedule(id);
 	}
 
 	@POST
@@ -57,7 +53,7 @@ public class ScheduleEndPoint {
 	@Path("/json")
 	@Produces({"application/json"})
 	public String updateSchedule(@PathParam("id") Long id,String schedule) {
-		return impl.updateSchedule(id, schedule);
+		return updateSchedule(id, schedule);
 	}
 	
 }

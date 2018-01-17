@@ -51,4 +51,5 @@ public class PersonEndpoint {
 	public String deletePerson(@PathParam("id") Long id) {
 		return service.deletePerson(id);
 	}
+
 }
