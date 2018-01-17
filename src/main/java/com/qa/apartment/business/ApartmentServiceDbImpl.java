@@ -11,7 +11,7 @@ import com.qa.apartment.persistance.Apartment;
 import com.qa.apartment.util.JSONUtil;
 
 @Transactional(Transactional.TxType.SUPPORTS)
-public class ApartmentServiceDbImpl {
+public class ApartmentServiceDbImpl implements ApartmentService {
 	
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;

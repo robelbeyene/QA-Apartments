@@ -1,6 +1,8 @@
 package com.qa.apartment.business;
 
 import java.util.List;
+
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -9,11 +11,13 @@ import com.qa.apartment.persistance.Person;
 import com.qa.apartment.util.JSONUtil;
 
 @Transactional(Transactional.TxType.SUPPORTS)
-public class PersonDBImple {
+public class PersonDBImple implements PersonService{
 
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
-	private JSONUtil util = new JSONUtil();
+	
+	@Inject
+	private JSONUtil util;
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	public String createPersonFromString(String person) {
@@ -41,25 +45,32 @@ public class PersonDBImple {
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updatePersonFromPerson(Person newDetails) {
+	public String updatePersonFromPerson(Long id,Person newDetails) {
 		em.merge(newDetails);
 		return "{\"message\": \"person sucessfully updated\"}";
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String deletePerson(long id) {
+	public String deletePerson(Long id) {
 		em.remove(findPerson(id));
 		return "{\"message\": \"person sucessfully removed\"}";
 	}
 
-	public List<Person> findAllPersons() {
+	public String findAllPersons() {
 		TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p ORDER BY p.id", Person.class);
-
-		return query.getResultList();
+		return util.getJSONForObject(query.getResultList());
 	}
 
-	public Person findPerson(long id) {
+	public Person findPerson(Long id) {
 		return em.find(Person.class, id);
+	}
+	
+	public JSONUtil getUtil() {
+		return util;
+	}
+
+	public void setUtil(JSONUtil util) {
+		this.util = util;
 	}
 
 }
