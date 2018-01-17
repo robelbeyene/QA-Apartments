@@ -31,11 +31,16 @@ public class ScheduleDBImple {
 	}
 	
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updateSchedule(String schedule)
+	public String updateSchedule(Long id, String schedule)
 	{
 		Schedule aSchedule = util.getObjectForJSON(schedule, Schedule.class);
-		em.merge(aSchedule);
-		return "{\"message\": \"schedule sucessfully updated\"}";
+		Schedule currentPerson = findSchedule(id);
+		if (currentPerson != null) {
+			currentPerson = aSchedule;
+			em.merge(aSchedule);
+			return "{\"message\": \"person sucessfully updated\"}";
+		}		
+		return "{\"message\": \"person not updated\"}";
 	}
 	
 	public Schedule findSchedule(Long id)
