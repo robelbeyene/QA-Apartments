@@ -1,7 +1,6 @@
 package com.qa.apartment.business;
-
-import java.util.List;
-
+//
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -12,38 +11,47 @@ import com.qa.apartment.util.JSONUtil;
 
 @Transactional(Transactional.TxType.SUPPORTS)
 public class ApartmentServiceDbImpl implements ApartmentService {
-	
+
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
-//	private JSONUtil jsonUtil = new JSONUtil();
-	
+
+	@Inject
+	private JSONUtil util;
+
 	public Apartment findApartment(long id) {
-		return em.find(Apartment.class,id);
+		return em.find(Apartment.class, id);
 	}
-	
-	public List<Apartment> findAllApartments() {
+
+	public String findAllApartments() {
 		TypedQuery<Apartment> query = em.createQuery("SELECT a FROM Apartment a ORDER BY a.id", Apartment.class);
-		return query.getResultList();
+		return util.getJSONForObject(query.getResultList());
 	}
-	
+
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String createApartment(Apartment apartment) {
-		em.persist(apartment);
-		return "added apartment";
+	public String createApartment(String apartment) {
+		Apartment newApartment = util.getObjectForJSON(apartment, Apartment.class);
+		em.persist(newApartment);
+		return "{\"message\": \"Apartment sucessfully Added\"}";
 	}
-	
+
 	@Transactional(Transactional.TxType.REQUIRED)
 	public String deleteApartment(long id) {
-		em.remove(id);
-		return "Back you go, back into hell";
+		Apartment apartment = findApartment(new Long(id));
+		if (apartment != null) {
+			em.remove(apartment);
+		}
+		return "{\"message\": \"Apartment sucessfully removed\"}";
 	}
-	
-	@Transactional(Transactional.TxType.REQUIRED)
-	public String updateApartment(long id, Apartment newApartment) {
-		newApartment = em.merge(findApartment(id));
-		return "movie sucessfully updated";
-	}
-	
-	
 
+	@Transactional(Transactional.TxType.REQUIRED)
+	public String updateApartment(long id, String newApartment) {
+		Apartment apartment = util.getObjectForJSON(newApartment, Apartment.class);
+		Apartment selectedApartment = findApartment(id);
+		if (selectedApartment != null) {
+			selectedApartment = apartment;
+			em.merge(apartment);
+			return "{\"message\": \"Apartment sucessfully updated\"}";
+		}
+		return "{\"message\": \"Apartment failed to update\"}";
+	}
 }

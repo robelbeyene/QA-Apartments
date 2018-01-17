@@ -1,17 +1,15 @@
 package com.qa.apartment.business;
-
-import java.util.List;
-
+//
 import com.qa.apartment.persistance.Apartment;
 
 public interface ApartmentService {
 	public Apartment findApartment(long id);
 
-	public List<Apartment> findAllApartments();
+	public String findAllApartments();
 
-	public String createApartment(Apartment apartment);
+	public String createApartment(String apartment);
 
 	public String deleteApartment(long id);
 
-	public String updateApartment(long id, Apartment newApartment);
+	public String updateApartment(long id, String newApartment);
 }
