@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.*;
 @Path("/apartment")
-public class ApartmentApi {
+public class ApartmentEndpoint {
 	
 	@Inject
 	JSONUtil jsonUtil; 
