@@ -9,6 +9,7 @@ import {Route,
 import logo from './logo.svg';
 import Home from './components/Home'
 import Apartments from './components/Apartments'
+import AddApartment from './components/AddApartment'
 import Calendar from './components/Calendar'
 import './App.css';
 
@@ -27,7 +28,8 @@ class App extends Component {
         <Switch>
         <div className = "content">
           <Route exact path = "/" component={Home}/>
-          <Route path = "/apartments" component={Apartments}/>
+          <Route exact path = "/apartments" component={Apartments}/>
+          <Route path = "/apartments/addApartment" component={AddApartment}/>
           <Route path = "/calendar" component={Calendar}/>
 
         </div>

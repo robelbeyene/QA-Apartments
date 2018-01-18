@@ -1,6 +1,9 @@
 import React from 'react';
+import AddApartment from './AddApartment';
 
-const Apartments = () => {
+class Apartments extends React.Component {
+
+    render(){
       return (
         <div className='pageheader'>
           <div className='row'>
@@ -17,7 +20,7 @@ const Apartments = () => {
             </div>
         </div>
       );
+    }
     };
-
 
 export default Apartments;

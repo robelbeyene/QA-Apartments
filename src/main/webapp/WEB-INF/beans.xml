@@ -24,6 +24,5 @@
       
       <alternatives>
       	<class>com.qa.apartment.business.PersonMapImpl</class>
-        <class>com.qa.bookstore.business.RoomImple</class>
       </alternatives>
 </beans>
