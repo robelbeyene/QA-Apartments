@@ -25,7 +25,7 @@ public class ScheduleDBImple implements ScheduleService {
 	}
 	
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String deleteSchedule(long id) {
+	public String deleteSchedule(Long id) {
 		em.remove(em.find(Schedule.class, id));
 		return "{\"message\": \"schedule sucessfully removed\"}";
 	}
@@ -49,5 +49,12 @@ public class ScheduleDBImple implements ScheduleService {
 		Collection<Schedule> schedule = (Collection<Schedule>) query.getResultList();
         return util.getJSONForObject(schedule);
 	}
+
+	@Override
+	public String findSchedule(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
+
 

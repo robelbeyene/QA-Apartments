@@ -30,6 +30,15 @@ public class Schedule {
 		this.to_date = to_date;
 		this.personID = personID;
 	}
+	
+	public Schedule(int id, Date from_date, Date to_date, Person personID, Room roomID) {
+		this.id = id;
+		this.from_date = from_date;
+		this.to_date = to_date;
+		this.personID = personID;
+		this.roomID = roomID;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -72,5 +81,21 @@ public class Schedule {
 	}
 	public void setTo_date(Date to_date) {
 		this.to_date = to_date;
+	}
+
+	public Person getPersonID() {
+		return personID;
+	}
+
+	public void setPersonID(Person personID) {
+		this.personID = personID;
+	}
+
+	public Room getRoomID() {
+		return roomID;
+	}
+
+	public void setRoomID(Room roomID) {
+		this.roomID = roomID;
 	}
 }
