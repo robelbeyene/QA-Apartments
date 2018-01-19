@@ -1,26 +1,227 @@
 import React from 'react';
-import AddApartment from './AddApartment';
 
 class Apartments extends React.Component {
 
-    render(){
-      return (
-        <div className='pageheader'>
-          <div className='row'>
-            <div className="col-md-6">
-          <h2>Apartments</h2>
-          <p>Since supplying our first trailers to ITV’s successful crime drama, Cracker in 1992, HNA has built up an extensive track record providing facilities vehicles to TV and Film throughout the UK and mainland Europe.
-          </p>
-          <p>
-          For twenty-five years, HNA Facilities has been involved in thousands of dramas and feature film productions, providing serviced vehicle hire for on-location support.
-          </p>
-          <p>
-          HNA operates a comprehensive range of vehicles to cater for all requirements, large or small, using experienced, friendly drivers. Our hands-on 24/7 management approach ensures your job runs smoothly every time.</p>
-          </div>
-            </div>
-        </div>
-      );
-    }
+      constructor() {
+        super();
+
+    this.state = {
+      stateText:[],
+      roomText:[],
+      roomSchedule:[]
     };
+
+    // this.getApartmentList = this.getApartmentList.bind(this);
+    // this.getApartment = this.getApartment.bind(this);
+
+  }
+
+
+  getApartment = () => {
+
+    let selectBox = document.getElementById("apartmentSelect");
+    let selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    let id;
+    let url = "http://localhost:8080/qa-apartments3/Rest/apartment/json/";
+
+    let leaseStartBox = document.getElementById("leaseStartBox");
+    let leaseEndBox = document.getElementById("leaseEndBox");
+    let breakClauseBox = document.getElementById("breakClauseBox");
+
+    url = url + selectedValue;
+
+    let fetchData = { 
+      method: 'GET',
+      mode: 'no-cors'
+    };
+   
+    fetch(url,fetchData)
+    .then(response=>{
+        //If a 2xx response is received return the response as JSON
+        if(response.ok){  
+          return response.json();  
+        }
+        //Throw an error otherwise and jump to the catch statement
+        throw Error(response.statusText);
+    })
+    .then(response=>{
+      //Do stuff with the JSON
+      //alert(JSON.stringify(response));
+      leaseStartBox.value = response.leaseStart;
+      leaseEndBox.value = response.leaseEnd;
+      breakClauseBox.value = response.breakClause;
+      id = response.id;
+      //  console.log('getting room details for selected Value: '+selectedValue)
+    
+    })
+    .then(()=>
+        this.getAllRooms(String(id))
+    )
+    .catch(error=>{
+      console.log("Request Failed: " + error.message);
+    });
+    
+}
+
+getApartmentList = () => {
+
+  let url = "http://localhost:8080/qa-apartments3/Rest/apartment/json";
+  let fetchData = { 
+    method: 'GET',
+    mode: 'no-cors'
+  };
+
+  fetch(url,fetchData)
+  .then(response=>
+      //If a 2xx response is received return the response as JSON
+       response.ok?response.json():Error(response.statusText)
+      //Throw an error otherwise and jump to the catch statement
+  )
+  .then(response=>{
+   
+    const ids = JSON.parse(response).reduce((acc,apartment)=>{
+      acc.push(apartment.id);
+      return acc;
+    },[])
+
+     this.setState({stateText:ids});
+  })
+  .catch(error=>{
+    console.log("Request Failed: " + error.message);
+  });
+
+}
+
+getAllRooms = (idValue) => {
+
+  let url = "http://localhost:8080/qa-apartments3/Rest/room/getRoom/";
+  
+  let fetchData = { 
+    method: 'GET',
+    mode: 'no-cors'
+  };
+
+  fetch(url,fetchData)
+  .then(response=>{
+    //   //If a 2xx response is received return the response as JSON
+    //   if(response.ok){  
+      console.log(response)
+      return response.json()
+  }
+      // }
+      // //Throw an error otherwise and jump to the catch statement
+      // throw Error(response.statusText);
+  )
+  .then(data=>{
+      console.log(data)
+    
+    return data.reduce((acc,room)=>{
+        if(String(idValue)===String(room.apartment.id)){
+          console.log('found')
+          acc.push(room.roomId);
+        }
+        else{console.log('not found')}
+      return acc;
+    },[])
+  
+  })
+  .then((roomIds)=>{
+      this.setState({roomText:roomIds});
+  })
+  .catch(error=>{
+    console.log("Request Failed: " + error.message);
+  });
+}
+
+getRoomDetails = () => {
+
+  let selectBox = document.getElementById("roomSelect");
+  let selectedValue = selectBox.options[selectBox.selectedIndex].value;
+
+  let url = "http://localhost:8080/qa-apartments3/Rest/schedule/json";
+
+  let fetchData = { 
+    method: 'GET',
+    mode: 'no-cors'
+  };
+
+  fetch(url,fetchData)
+  .then(response=>{
+      //If a 2xx response is received return the response as JSON
+      if(response.ok){  
+        return response.json();  
+      }
+      //Throw an error otherwise and jump to the catch statement
+      throw Error(response.statusText);
+  })
+  .then(response=>{
+    const roomData = response.reduce((acc,room)=>{
+      console.log(room)
+        if(String(selectedValue) === String(room.roomID.roomId)){
+          acc.push(room);
+        }
+      return acc;
+    },[])
+    console.log(roomData)
+    this.setState({roomSchedule:roomData});
+  })
+  .catch(error=>{
+    console.log("Request Failed: " + error.message);
+  });
+
+
+
+
+
+}
+
+  render() {
+    return (
+      <div>
+        <div>
+
+            <select id="apartmentSelect">
+            {
+              this.state.stateText.map((apartment) => (
+                <option key={apartment} value={apartment}>Apartment id:{apartment}</option>
+              ))
+            }
+            </select>
+            <br/>
+            <input type="button" id="getApartment" value="Get Apartment" onClick={()=>this.getApartment()}/><br/>
+            <input type="button" id="getAllApartments" value="Refresh List" onClick={()=>this.getApartmentList()}/>
+        </div>
+        <br/> <br/> 
+        <hr/>
+        <div> 
+          <select id="roomSelect">
+          {
+              this.state.roomText.map((room) => (
+                <option key={room} value={room}>Room id:{room}</option>
+              ))
+          } 
+          </select>
+          <input type="button" id="getRoomInfo" value="Get Room Details" onClick={()=>this.getRoomDetails()}/><br/>
+          {
+              this.state.roomSchedule.map((roomInfo) => (
+                <p key = {roomInfo.id}>Person:{roomInfo.personID.firstName + " " + roomInfo.personID.lastName} From:{roomInfo.from_date} To:{roomInfo.to_date}</p>
+              ))
+          }
+        </div>
+        <br/> <br/> <br/> <br/>
+        <hr/>
+        <div>
+            <p>Misc Section</p>
+            <label for="leaseStartBox">Lease Start</label>
+            <input type="text" name="lease_start" id="leaseStartBox" placeholder="Lease Start"/>
+            <label for="leaseEndBox">Lease End</label>
+            <input type="text" name="lease_end" id="leaseEndBox" placeholder="Lease End"/>
+            <label for="breakClauseBox">Break Clause</label>
+            <input type="text" name="break_clause" id="breakClauseBox" placeholder="Break Clause"/>
+        </div>
+      </div>
+    );
+  }
+}
 
 export default Apartments;

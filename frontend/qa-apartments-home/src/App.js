@@ -6,6 +6,7 @@ import {Route,
   Switch,
   Link 
 } from 'react-router-dom';
+
 import logo from './logo.svg';
 import Home from './components/Home'
 import Apartments from './components/Apartments'
