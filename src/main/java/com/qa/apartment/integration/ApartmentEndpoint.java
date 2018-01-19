@@ -2,6 +2,8 @@ package com.qa.apartment.integration;
 
 import javax.ws.rs.*;
 
+import org.apache.log4j.Logger;
+
 import com.qa.apartment.business.ApartmentServiceDbImpl;
 import com.qa.apartment.persistance.Apartment;
 import com.qa.apartment.util.JSONUtil;
@@ -11,6 +13,7 @@ import java.util.List;
 import javax.inject.*;
 @Path("/apartment")
 public class ApartmentEndpoint {
+	private static final Logger LOGGER = Logger.getLogger(ApartmentEndpoint.class);
 	
 	@Inject
 	JSONUtil jsonUtil; 
@@ -27,12 +30,13 @@ public class ApartmentEndpoint {
 	@Path("/json")
 	@GET
 	public String getAllApartments() {
-		return jsonUtil.getJSONForObject(service.findAllApartments());
+		return service.findAllApartments();
 	}
 	
 	@Path("/json")
 	@POST
 	public String createApartment(String newAp) {
+		LOGGER.info("in ApartmentEndpoint the value of string is  " + newAp );
 		return service.createApartment(newAp);
 	}
 	

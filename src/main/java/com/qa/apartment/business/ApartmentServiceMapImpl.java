@@ -38,7 +38,7 @@ public class ApartmentServiceMapImpl implements ApartmentService{
 	public String createApartment(String apartment) {
 		Apartment newApartment = util.getObjectForJSON(apartment, Apartment.class);
 		apartmentMap.put(ID, newApartment);
-		return newApartment.getAddress();
+		return "new apartment added";//newApartment.getAddress();
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class ApartmentServiceMapImpl implements ApartmentService{
 		Apartment newApartment = util.getObjectForJSON(newApartmentInfo, Apartment.class);
 		int originalApartmentID = (int) id;
 		apartmentMap.put(originalApartmentID, newApartment);
-		return apartmentMap.get(originalApartmentID).getAddress();
+		return "map updated";//apartmentMap.get(originalApartmentID).getAddress();
 	}
 	
 
