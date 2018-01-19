@@ -14,14 +14,18 @@ public class Apartment {
 	@Column
 	@NotNull	
 	private String buildingName;
+	
 	@Column
 	@NotNull
 	private String apartmentNo;
+	
 	@Column
 	@NotNull
 	private String agency;
+	
 	@Column
 	private String landlord;
+	
 	@Column
 	@NotNull
 	private String tenant;
@@ -34,22 +38,29 @@ public class Apartment {
 	@Column
 	@NotNull
 	private String leaseEnd;
+	
 	@Column
 	@NotNull
 	private String breakClause;
+	
 	@Column
 	@NotNull
 	private String agencyPhoneNo;
+	
 	@Column
 	private Integer noRooms;
+	
 	@Column
 	@NotNull
 	private Double rent;
+	
 	@Column
 	private String notes;
+	
 	@Column
 	@NotNull
 	private String address;
+	
 	@Column
 	@NotNull
 	private Double deposit;
