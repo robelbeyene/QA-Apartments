@@ -1,6 +1,9 @@
 import React from 'react';
 
-class Apartments extends React.Component {
+import ApartmentList from './ApartmentComps/ApartmentList';
+import RoomList from './ApartmentComps/RoomList';
+import RoomSchedule from './ApartmentComps/RoomSchedule';
+class Apartment extends React.Component {
 
       constructor() {
         super();
@@ -179,14 +182,7 @@ getRoomDetails = () => {
     return (
       <div>
         <div>
-
-            <select id="apartmentSelect">
-            {
-              this.state.stateText.map((apartment) => (
-                <option key={apartment} value={apartment}>Apartment id:{apartment}</option>
-              ))
-            }
-            </select>
+         <ApartmentList list={this.state.stateText}/>
             <br/>
             <input type="button" id="getApartment" value="Get Apartment" onClick={()=>this.getApartment()}/><br/>
             <input type="button" id="getAllApartments" value="Refresh List" onClick={()=>this.getApartmentList()}/>
@@ -196,16 +192,16 @@ getRoomDetails = () => {
         <div> 
           <select id="roomSelect">
           {
-              this.state.roomText.map((room) => (
-                <option key={room} value={room}>Room id:{room}</option>
-              ))
+              this.state.roomText.map(room => 
+                <RoomList room={room}/>
+              )
           } 
           </select>
           <input type="button" id="getRoomInfo" value="Get Room Details" onClick={()=>this.getRoomDetails()}/><br/>
           {
-              this.state.roomSchedule.map((roomInfo) => (
-                <p key = {roomInfo.id}>Person:{roomInfo.personID.firstName + " " + roomInfo.personID.lastName} From:{roomInfo.from_date} To:{roomInfo.to_date}</p>
-              ))
+              this.state.roomSchedule.map(roomInfo => 
+                <RoomSchedule roomInfo={roomInfo}/>
+              )
           }
         </div>
         <br/> <br/> <br/> <br/>
@@ -224,4 +220,4 @@ getRoomDetails = () => {
   }
 }
 
-export default Apartments;
+export default Apartment;
