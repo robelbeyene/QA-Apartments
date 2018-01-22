@@ -50,7 +50,7 @@ public class ScheduleEndPoint {
 	}
 	
 	@PUT
-	@Path("/json")
+	@Path("/json/{id}")
 	@Produces({"application/json"})
 	public String updateSchedule(@PathParam("id") Long id,String schedule) {
 		return updateSchedule(id, schedule);
