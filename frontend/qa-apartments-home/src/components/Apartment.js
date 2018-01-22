@@ -21,6 +21,8 @@ class Apartment extends React.Component {
     this.getApartmentList();
   }
 
+  
+
   getApartment = () => {
 
     let selectBox = document.getElementById("apartmentSelect");
@@ -169,7 +171,6 @@ getRoomDetails = () => {
          <ApartmentList list={this.state.stateText}/>
             <br/>
             <button id="getApartment"onClick={()=>this.getApartment()}>Get Apartment</button><br/>
-            <button id="getAllApartments" onClick={()=>this.getApartmentList()}>Refresh List</button>
         </div>
         <br/> <br/> 
         <hr/>
@@ -193,7 +194,7 @@ getRoomDetails = () => {
         <div>
             <p>Misc Section</p>
             <label for="leaseStartBox">Lease Start</label>
-            <input type="text" name="lease_start" id="leaseStartBox" placeholder="Lease Start"/>
+            <input type="text" name="lease_start" id="leaseStartBox" placeholder="Lease Start" disabled="false"/>
             <label for="leaseEndBox">Lease End</label>
             <input type="text" name="lease_end" id="leaseEndBox" placeholder="Lease End"/>
             <label for="breakClauseBox">Break Clause</label>

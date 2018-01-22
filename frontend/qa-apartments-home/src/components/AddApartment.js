@@ -1,9 +1,11 @@
 import React from 'react';
 
-const baseURL = "http://localhost:8080/qa-apartments3/Rest/apartment/json"
+const baseURL = "http://localhost:8080/qa-apartments3/rest/"
 
-function create(apartmentObject){
-    const request = new Request(baseURL, {
+
+
+function createApartment(apartmentObject){
+    const request = new Request(`${baseURL}apartment/json/`, {
         method: "POST",
         headers : {
             'contentType' : 'application/json'
@@ -15,11 +17,11 @@ function create(apartmentObject){
 
 class AddApartment extends React.Component {
         constructor(){
-      super();
-      this.state={
-        apartment:{}
-      }
-    }
+        super();
+        this.state={
+            apartment:{}
+        }
+        }
 
     onChange=e=>{
         // console.log(e.target.value)
@@ -29,7 +31,25 @@ class AddApartment extends React.Component {
 
     addApartment=()=>{
         const stateToSend = {...this.state.apartment}
-        create(JSON.stringify(stateToSend))
+        if (Object.keys(stateToSend)>10) {
+            createApartment(JSON.stringify(stateToSend))
+            for (let i = 1; i <= stateToSend.noRooms; i++) {
+                this.createRoom(i)
+            }
+        }
+    }
+
+    createRoom=(roomNo)=>{
+         const request = new Request(`${baseURL}room/addRoom/`, {
+            method: "POST",
+            headers : {
+                'contentType' : 'application/json'
+            },
+            body : `{
+                "apartment"
+            }`
+        });
+    return fetch(request).then(()=>'worked', ()=>'failed');
     }
     
    

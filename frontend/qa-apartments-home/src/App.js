@@ -12,6 +12,7 @@ import Home from './components/Home';
 import Apartment from './components/Apartment';
 import AddApartment from './components/AddApartment';
 import Calendar from './components/Calendar';
+import AddPersonToApartment from './components/AddPersonToApartment';
 import './App.css';
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
             <Route exact path = "/apartment" component={Apartment}/>
             <Route path = "/apartments/addApartment" component={AddApartment}/>
             <Route path = "/calendar" component={Calendar}/>
+            <Route path = "/apartments/addPersonToApartment" component={AddPersonToApartment}/>
       
           </div>
           </Switch>
