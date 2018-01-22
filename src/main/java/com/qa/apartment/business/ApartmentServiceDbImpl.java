@@ -31,7 +31,7 @@ public class ApartmentServiceDbImpl implements ApartmentService {
 	public String createApartment(String apartment) {
 		Apartment newApartment = util.getObjectForJSON(apartment, Apartment.class);
 		em.persist(newApartment);
-		return "{\"message\": \"Apartment sucessfully Added\"}";
+		return util.getJSONForObject(newApartment);
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
