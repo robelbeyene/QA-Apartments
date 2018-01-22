@@ -16,9 +16,11 @@ class Apartment extends React.Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount=()=>{
+    console.log('mounting')
     this.getApartmentList();
   }
+
   getApartment = () => {
 
     let selectBox = document.getElementById("apartmentSelect");
@@ -67,7 +69,7 @@ class Apartment extends React.Component {
 
 getApartmentList = () => {
 
-  let url = 'http://localhost:8080/qa-apartments3/Rest/apartment/json';
+  let url = 'http://localhost:8080/qa-apartments3/Rest/apartment/json/';
   let fetchData = { 
     method: 'GET',
     mode: 'no-cors'
@@ -78,10 +80,12 @@ getApartmentList = () => {
        response.ok?response.json():Error(response.statusText)
   )
   .then(response=>{
-    const ids = JSON.parse(response).reduce((acc,apartment)=>{
+    console.log('adding stuf')
+    const ids = response.reduce((acc,apartment)=>{
       acc.push(apartment.id);
       return acc;
     },[])
+    console.log(ids)
      this.setState({stateText:ids});
   })
   .catch(error=>{
