@@ -18,23 +18,25 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="container-fluid">
-                  <ul className="header nav navbar-nav">
-                    <li><NavLink to="/" exact activeClassName="active">Home</NavLink></li>  
-                    <li><NavLink to="/apartment" activeClassName="active">Apartment</NavLink></li>
-                    <li><NavLink to="/calendar" activeClassName="active">Calendar</NavLink></li>
-                  </ul>
-        </div>
-        
-        <Switch>
-        <div className = "content">
-          <Route exact path = "/" component={Home}/>
-          <Route exact path = "/apartment" component={Apartment}/>
-          <Route path = "/apartments/addApartment" component={AddApartment}/>
-          <Route path = "/calendar" component={Calendar}/>
+         <div className ="bodyDiv">
+          <div className="container-fluid">
+                    <ul className="header nav navbar-nav">
+                      <li><NavLink to="/" exact activeClassName="active">Home</NavLink></li>  
+                      <li><NavLink to="/apartment" activeClassName="active">Apartment</NavLink></li>
+                      <li><NavLink to="/calendar" activeClassName="active">Calendar</NavLink></li>
+                    </ul>
+          </div>
 
+          <Switch>
+          <div className = "content">
+            <Route exact path = "/" component={Home}/>
+            <Route exact path = "/apartment" component={Apartment}/>
+            <Route path = "/apartments/addApartment" component={AddApartment}/>
+            <Route path = "/calendar" component={Calendar}/>
+      
+          </div>
+          </Switch>
         </div>
-        </Switch>
       </div>
     );
   }

@@ -164,7 +164,8 @@ getRoomDetails = () => {
         <div>
          <ApartmentList list={this.state.stateText}/>
             <br/>
-            <input type="button" id="getApartment" value="Get Apartment" onClick={()=>this.getApartment()}/><br/>
+            <button id="getApartment"onClick={()=>this.getApartment()}>Get Apartment</button><br/>
+            <button id="getAllApartments" onClick={()=>this.getApartmentList()}>Refresh List</button>
         </div>
         <br/> <br/> 
         <hr/>
@@ -176,7 +177,7 @@ getRoomDetails = () => {
               )
           } 
           </select>
-          <input type="button" id="getRoomInfo" value="Get Room Details" onClick={()=>this.getRoomDetails()}/><br/>
+          <button id="getRoomInfo" onClick={()=>this.getRoomDetails()}>Get Room Details</button><br/>
           {
               this.state.roomSchedule.map(roomInfo => 
                 <RoomSchedule roomInfo={roomInfo}/>
