@@ -1,7 +1,5 @@
 package com.qa.apartment.business;
 
-import java.util.List;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,11 +9,11 @@ import com.qa.apartment.persistance.Person;
 import com.qa.apartment.util.JSONUtil;
 
 @Transactional(Transactional.TxType.SUPPORTS)
-public class PersonDBImple implements PersonService{
+public class PersonDBImple implements PersonService {
 
 	@PersistenceContext(unitName = "primary")
 	private EntityManager em;
-	
+
 	@Inject
 	private JSONUtil util;
 
@@ -45,7 +43,7 @@ public class PersonDBImple implements PersonService{
 	}
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public String updatePersonFromPerson(Long id,Person newDetails) {
+	public String updatePersonFromPerson(Long id, Person newDetails) {
 		em.merge(newDetails);
 		return "{\"message\": \"person sucessfully updated\"}";
 	}
@@ -64,7 +62,7 @@ public class PersonDBImple implements PersonService{
 	public Person findPerson(Long id) {
 		return em.find(Person.class, id);
 	}
-	
+
 	public JSONUtil getUtil() {
 		return util;
 	}
