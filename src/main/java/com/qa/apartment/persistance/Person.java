@@ -23,7 +23,7 @@ public class Person {
 	@Email 
 	private String email;
 	
-	@Column(name="phone_number")
+	@Column(name="phone_number", length=11)
 	private String phoneNumber;
 	
 	public Person() {

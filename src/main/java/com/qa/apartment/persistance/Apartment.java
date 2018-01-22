@@ -15,7 +15,7 @@ public class Apartment {
 	@NotNull	
 	private String buildingName;
 	
-	@Column
+	@Column (length=5)
 	@NotNull
 	private String apartmentNo;
 	
@@ -37,17 +37,19 @@ public class Apartment {
 	
 	@Column
 	@NotNull
-	private String leaseEnd;
+	@Temporal(TemporalType.DATE)
+	private Date leaseEnd;
 	
-	@Column
+	@Column (length=10)
 	@NotNull
-	private String breakClause;
+	@Temporal(TemporalType.DATE)
+	private Date breakClause;
 	
 	@Column
 	@NotNull
 	private String agencyPhoneNo;
 	
-	@Column
+	@Column (length=1)
 	private Integer noRooms;
 	
 	@Column
@@ -127,19 +129,19 @@ public class Apartment {
 		this.leaseStart = leaseStart;
 	}
 	
-	public String getLeaseEnd() {
+	public Date getLeaseEnd() {
 		return leaseEnd;
 	}
 
-	public void setLeaseEnd(String leaseEnd) {
+	public void setLeaseEnd(Date leaseEnd) {
 		this.leaseEnd = leaseEnd;
 	}
 
-	public String getBreakClause() {
+	public Date getBreakClause() {
 		return breakClause;
 	}
 
-	public void setBreakClause(String breakClause) {
+	public void setBreakClause(Date breakClause) {
 		this.breakClause = breakClause;
 	}
 
