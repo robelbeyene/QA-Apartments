@@ -3,6 +3,7 @@ import React from 'react';
 import ApartmentList from './ApartmentComps/ApartmentList';
 import RoomList from './ApartmentComps/RoomList';
 import RoomSchedule from './ApartmentComps/RoomSchedule';
+
 class Apartment extends React.Component {
 
       constructor() {
@@ -13,13 +14,11 @@ class Apartment extends React.Component {
       roomText:[],
       roomSchedule:[]
     };
-
-    // this.getApartmentList = this.getApartmentList.bind(this);
-    // this.getApartment = this.getApartment.bind(this);
-
   }
 
-
+  componentDidMount(){
+    this.getApartmentList();
+  }
   getApartment = () => {
 
     let selectBox = document.getElementById("apartmentSelect");
@@ -68,7 +67,7 @@ class Apartment extends React.Component {
 
 getApartmentList = () => {
 
-  let url = "http://localhost:8080/qa-apartments3/Rest/apartment/json";
+  let url = 'http://localhost:8080/qa-apartments3/Rest/apartment/json';
   let fetchData = { 
     method: 'GET',
     mode: 'no-cors'
@@ -76,17 +75,13 @@ getApartmentList = () => {
 
   fetch(url,fetchData)
   .then(response=>
-      //If a 2xx response is received return the response as JSON
        response.ok?response.json():Error(response.statusText)
-      //Throw an error otherwise and jump to the catch statement
   )
   .then(response=>{
-   
     const ids = JSON.parse(response).reduce((acc,apartment)=>{
       acc.push(apartment.id);
       return acc;
     },[])
-
      this.setState({stateText:ids});
   })
   .catch(error=>{
@@ -105,29 +100,16 @@ getAllRooms = (idValue) => {
   };
 
   fetch(url,fetchData)
-  .then(response=>{
-    //   //If a 2xx response is received return the response as JSON
-    //   if(response.ok){  
-      console.log(response)
-      return response.json()
-  }
-      // }
-      // //Throw an error otherwise and jump to the catch statement
-      // throw Error(response.statusText);
+  .then(response=>
+    response.ok?response.json():Error(response.statusText)
   )
-  .then(data=>{
-      console.log(data)
-    
-    return data.reduce((acc,room)=>{
+  .then(data=>
+     data.reduce((acc,room)=>{
         if(String(idValue)===String(room.apartment.id)){
-          console.log('found')
           acc.push(room.roomId);
         }
-        else{console.log('not found')}
       return acc;
-    },[])
-  
-  })
+    },[]))
   .then((roomIds)=>{
       this.setState({roomText:roomIds});
   })
@@ -137,11 +119,9 @@ getAllRooms = (idValue) => {
 }
 
 getRoomDetails = () => {
-
   let selectBox = document.getElementById("roomSelect");
   let selectedValue = selectBox.options[selectBox.selectedIndex].value;
-
-  let url = "http://localhost:8080/qa-apartments3/Rest/schedule/json";
+  let url = 'http://localhost:8080/qa-apartments3/Rest/schedule/json';
 
   let fetchData = { 
     method: 'GET',
@@ -185,7 +165,6 @@ getRoomDetails = () => {
          <ApartmentList list={this.state.stateText}/>
             <br/>
             <input type="button" id="getApartment" value="Get Apartment" onClick={()=>this.getApartment()}/><br/>
-            <input type="button" id="getAllApartments" value="Refresh List" onClick={()=>this.getApartmentList()}/>
         </div>
         <br/> <br/> 
         <hr/>
