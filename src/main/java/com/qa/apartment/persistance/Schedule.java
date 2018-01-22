@@ -19,24 +19,26 @@ public class Schedule {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Long id;
 
 	@Temporal(TemporalType.DATE)
-	@Column
+	@Column (length = 10)
 	@NotNull
 	private Date from_date;
 
 	@Temporal(TemporalType.DATE)
-	@Column
+	@Column (length = 10)
 	@NotNull
 	private Date to_date;
 
 	// Table joins for many to many relationships
 	@ManyToOne
+	@Column (length = 10000)
 	@JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "person_personID"))
 	private Person personID;
 
 	@ManyToOne
+	@Column (length = 10000)
 	@JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "room_roomIDs"))
 	private Room roomID;
 
@@ -44,7 +46,7 @@ public class Schedule {
 
 	}
 
-	public Schedule(int id, Date from_date, Date to_date, Person personID) {
+	public Schedule(Long id, Date from_date, Date to_date, Person personID) {
 		super();
 		this.id = id;
 		this.from_date = from_date;
@@ -52,7 +54,7 @@ public class Schedule {
 		this.personID = personID;
 	}
 
-	public Schedule(int id, Date from_date, Date to_date, Person personID, Room roomID) {
+	public Schedule(Long id, Date from_date, Date to_date, Person personID, Room roomID) {
 		this.id = id;
 		this.from_date = from_date;
 		this.to_date = to_date;
@@ -60,11 +62,11 @@ public class Schedule {
 		this.roomID = roomID;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

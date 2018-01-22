@@ -1,14 +1,9 @@
 package com.qa.apartment.integration;
 
 import javax.ws.rs.*;
-
 import org.apache.log4j.Logger;
-
 import com.qa.apartment.business.ApartmentServiceDbImpl;
-import com.qa.apartment.persistance.Apartment;
 import com.qa.apartment.util.JSONUtil;
-
-import java.util.List;
 
 import javax.inject.*;
 @Path("/apartment")

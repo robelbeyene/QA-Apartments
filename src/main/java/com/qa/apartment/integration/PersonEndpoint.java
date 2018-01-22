@@ -44,7 +44,7 @@ public class PersonEndpoint {
 	public String updatePerson(@PathParam("id") Long id, String newDetails) {
 		return service.updatePersonFromString(id, newDetails);
 	}
-	
+
 	@DELETE
 	@Path("/json/{id}")
 	public String deletePerson(@PathParam("id") Long id) {

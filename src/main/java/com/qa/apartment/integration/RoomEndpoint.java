@@ -31,7 +31,6 @@ public class RoomEndpoint {
 	@GET
 	public String getAllRooms() {
 		return roomService.findAllRooms();
-
 	}
 
 	@Path("/addRoom")
